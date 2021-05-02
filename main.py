@@ -44,19 +44,21 @@ class infoChanger:
 
     def timer(self):
         date = datetime.now()
-        if ("{}".format(date.hour) == "{}".format(00)):
+        if (date.hour == 22):
             return True
         else:
             time.sleep(1800)
             return False
         
-        
+    def reqStart(self):
+        while True:
+            if self.timer():
+                self.getCookie()
+                self.readReqFile()
+                self.sendReq()
+                time.sleep(3600)
         
 if __name__ == "__main__":
     x = infoChanger()
-    while True:
-        if x.timer():
-            x.getCookie()
-            x.readReqFile()
-            x.sendReq()
+    x.reqStart()
 
