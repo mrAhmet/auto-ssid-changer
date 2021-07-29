@@ -38,27 +38,13 @@ class infoChanger:
         
     def sendReq(self):
         self.chng_url = "http://192.168.2.1/cgi-bin/webapp"
+        self.getCookie()
         self.change_header = {'Host':'192.168.2.1' , 'Accept':'application/xml, text/xml, */*; q=0.01' , 'Accept-Language':'tr-TR,tr;q=0.8,en-US;q=0.5,en;q=0.3' , 'Accept-Encoding':'gzip, deflate' , 'Content-Type':'application/x-www-form-urlencoded' , 'X-Requested-With':'XMLHttpRequest' , 'Content-Length':'2532' , 'Origin':'http://192.168.2.1' , 'Connection':'close' , 'Referer':'http://192.168.2.1/wireless/settings/settings_new.html' , 'Cookie':'{}'.format(self.cookie)}
+        self.readReqFile()
         req_chng = requests.post(self.chng_url, data = self.xmlReq, headers = self.change_header)
         print(req_chng)
 
-    def timer(self):
-        date = datetime.now()
-        if (date.hour == 22):
-            return True
-        else:
-            time.sleep(1800)
-            return False
-        
-    def reqStart(self):
-        while True:
-            if self.timer():
-                self.getCookie()
-                self.readReqFile()
-                self.sendReq()
-                time.sleep(3600)
-        
 if __name__ == "__main__":
     x = infoChanger()
-    x.reqStart()
+    x.sendReq()
 
